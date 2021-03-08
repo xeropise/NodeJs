@@ -41,5 +41,7 @@ module.exports = class User extends (
       }
     );
   }
-  static associate(db) {}
+  static associate(db) {
+    db.User.hasMany(db.Comment, { foreignKey: "commenter", sourceKey: "id" });
+  }
 };
