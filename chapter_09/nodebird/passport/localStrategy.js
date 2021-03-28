@@ -8,9 +8,10 @@ module.exports = () => {
   passport.use(
     new LocalStrategy(
       {
+        // req.body 속성명을 적어 넣는다.
         usernameField: "email",
         passwordField: "password",
-      },
+      }, // 실제 전략을 수행하는 함수, done 함수는 passport.authenticate 의 콜백 함수
       async (email, password, done) => {
         try {
           const exUser = await User.findOne({ where: { email } });

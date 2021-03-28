@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/token", async (req, res) => {
   const { clientSecret } = req.body;
   try {
-    const domain = await Domain.fineOne({
+    const domain = await Domain.findOne({
       where: { clientSecret },
       include: {
         model: User,
@@ -22,7 +22,6 @@ router.post("/token", async (req, res) => {
         message: "등록되지 않은 도메인입니다. 먼저 도메인을 등록하세요",
       });
     }
-
     const token = jwt.sign(
       {
         id: domain.User.id,
