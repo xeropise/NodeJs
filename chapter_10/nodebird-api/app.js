@@ -11,12 +11,12 @@ dotenv.config();
 const v1 = require("./routes/v1");
 const authRouter = require("./routes/auth");
 const indexRouter = require("./routes");
+
 const { sequelize } = require("./models");
 const passportConfig = require("./passport");
 
 const app = express();
 passportConfig();
-
 app.set("port", process.env.PORT || 8002);
 app.set("view engine", "html");
 nunjucks.configure("views", {
@@ -25,7 +25,7 @@ nunjucks.configure("views", {
 });
 
 sequelize
-  .sync({ force: false })
+  .sync({ force: false }) // true 인 경우 강제적으로 테이블을 제거 후 다시 생성
   .then(() => {
     console.log("데이터베이스 연결 성공");
   })
@@ -49,6 +49,7 @@ app.use(
     },
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 
